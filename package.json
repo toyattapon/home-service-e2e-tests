@@ -1,0 +1,26 @@
+{
+  "name": "home-service-e2e-tests",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Playwright E2E automation framework for the Home Service QA Demo (home_service_qa_demo) system under test.",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "test:auth": "playwright test tests/auth",
+    "test:e2e": "playwright test tests/e2e",
+    "report": "playwright show-report",
+    "codegen": "playwright codegen http://localhost:5173",
+    "typecheck": "tsc --noEmit",
+    "sut:up": "bash scripts/start-sut.sh",
+    "sut:down": "bash scripts/stop-sut.sh"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "@types/node": "^22.10.0",
+    "dotenv": "^16.4.5",
+    "typescript": "^5.7.0"
+  }
+}
