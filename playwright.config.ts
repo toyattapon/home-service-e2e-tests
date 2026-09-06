@@ -43,7 +43,7 @@ export default defineConfig({
     // listening yet.
     url: `${env.apiBaseUrl}/health`,
     timeout: 180_000,
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: true,
     env: { SUT_DIR: env.sutDir },
   },
 });
