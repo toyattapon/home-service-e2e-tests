@@ -27,7 +27,7 @@ jobs:
       - name: Check out home_service_qa_demo (SUT)
         uses: actions/checkout@v4
         with:
-          repository: toyattapon/home-service-e2e-tests
+          repository: toyattapon/home-service-qa-demo
           path: sut
 
       - name: Check out home_service_e2e_tests (this repo)
