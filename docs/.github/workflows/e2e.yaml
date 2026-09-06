@@ -1,17 +1,3 @@
-# CI/CD plan (not yet implemented)
-
-Deliberately not wired up yet — see the decision in the project setup
-conversation. This document exists so the design is ready to implement
-without re-deriving it later.
-
-## Goal
-
-On every push / pull request, run the full Playwright suite against a fresh
-instance of the SUT (`home_service_qa_demo`), with no manual steps.
-
-## Proposed workflow: `.github/workflows/e2e.yml`
-
-```yaml
 name: E2E tests
 
 on:
@@ -41,7 +27,7 @@ jobs:
       - name: Check out home_service_qa_demo (SUT)
         uses: actions/checkout@v4
         with:
-          repository: <owner>/home_service_qa_demo
+          repository: toyattapon/home-service-qa-demo
           path: sut
 
       - name: Check out home_service_e2e_tests (this repo)
@@ -94,20 +80,3 @@ jobs:
           name: playwright-report
           path: e2e/playwright-report/
           retention-days: 14
-```
-
-## Notes for whoever implements this
-
-- `playwright.config.ts` already reads `process.env.CI` to flip
-  `reuseExistingServer` and `retries`/`forbidOnly`, so no config changes
-  should be needed on the Playwright side — only this workflow file plus
-  `webServer.command` should be skipped in CI (the workflow starts the SUT
-  itself) by setting `PLAYWRIGHT_SKIP_WEBSERVER=1` or removing the
-  `webServer` block behind a `process.env.CI` check.
-- The SUT and this framework are two separate repos/checkouts on purpose
-  (matching the SUT's own "not a monorepo" stance) — the workflow checks
-  out both.
-- Keep `NODE_ENV=test` for the SUT in CI so `POST /api/test/reset` stays
-  enabled (see the SUT's README: it is disabled outside development/test).
-- Consider caching `node_modules` and the Playwright browser binary
-  (`~/.cache/ms-playwright`) once this is real, to keep CI fast.
